@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title heree</title>
+</head>
+<body>
+<main>
+	<div class = "kanji_list_wrap">
+	
+		<div class = "kanji_list_top_wrap">
+		
+			<div>한자 리스트</div>
+		
+		</div>
+		<div class = "kanji_list_center_wrap">
+			
+			<div th:each ="period : ${course_period}">
+				<div th:text="${period}+'번째 한자들'"></div>			
+			</div>
+		</div>	
+	
+	</div>
+</main>
+</body>
+</html>

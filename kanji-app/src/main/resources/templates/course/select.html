@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title heree</title>
+</head>
+<body>
+	코스선택
+	<form action ="/course/selectb" method="post">
+		<input type="radio" name = "coursePeriod" value = "180" checked> 6개월 과정 <br>
+		<input type="radio" name = "coursePeriod" value = "150"> 5개월 과정 <br>
+		<input type="radio" name = "coursePeriod" value = "120"> 4개월 과정 <br>
+		<input type="radio" name = "coursePeriod" value = "90"> 3개월 과정 <br>
+		<input type="radio" name = "coursePeriod" value = "60"> 2개월 과정 <br>
+		<input type="radio" name = "coursePeriod" value = "30"> 1개월 과정 <br>
+		<button type="submit">과정 선택</button>
+	</form>
+</body>
+</html>
