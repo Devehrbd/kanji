@@ -2,6 +2,8 @@ package org.kanji.course.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,6 +22,7 @@ public class Course {
 	
 	@Id
 	@Column(name = "course_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int courseId;
 	
 	@ManyToOne

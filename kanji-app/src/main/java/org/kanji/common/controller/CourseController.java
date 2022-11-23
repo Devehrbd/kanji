@@ -30,9 +30,9 @@ public class CourseController {
 		
 	String login_member_id = (String)session.getAttribute("login_member_id");
 				
-	int existCourse = cService.readCourse(login_member_id);
+	Optional<Course> existCourse = cService.readCourse(login_member_id);
 		
-	if(existCourse != 0) {
+	if(existCourse.isPresent()) {
 			
 		return "redirect:/kanji/listSelect";
 			
@@ -48,12 +48,13 @@ public class CourseController {
 		HttpSession session = request.getSession();
 				
 		Course course = new Course();
+		
 		course.setCoursePeriod(coursePeriod);
 
 		course.setMember((Member)session.getAttribute("login_member"));
 		
 		cService.registCourse(course);
 		
-		return "redirect:/kanji/list";
+		return "redirect:/kanji/listSelect";
 	}
 }

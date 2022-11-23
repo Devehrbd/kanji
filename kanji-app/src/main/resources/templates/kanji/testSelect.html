@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title heree</title>
+</head>
+<body>
+ 
+<div class = "kanji_test_button" th:text="'모양자 테스트'" th:onclick="'location.href = \'' + @{/kanji/test(course_index=${course_index},type='character')} + '\''" ></div>
+<div class = "kanji_test2_button" th:text="'음훈 테스트'" th:onclick="'location.href = \'' + @{/kanji/test(course_index=${course_index},type='soundmean')} + '\''" ></div>
+
+</body>
+</html>

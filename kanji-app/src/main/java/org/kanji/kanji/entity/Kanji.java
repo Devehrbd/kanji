@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,6 +35,9 @@ public class Kanji {
 	
 	@Column(name = "jp_mean")
 	private String jpMean;
+	
+	@Column(name = "jp_grade")
+	private String jpGrade;
 	
 	
 }	

@@ -13,10 +13,9 @@
 			<div>한자 리스트</div>
 		
 		</div>
-		<div class = "kanji_list_center_wrap">
-			
-			<div th:each ="period : ${course_period}">
-				<div th:text="${period}+'번째 한자들'"></div>			
+		<div class = "kanji_list_center_wrap">	
+			<div th:each ="period, status : ${course_period}">
+				<div th:text="${period}+'번째 한자들'" th:onclick="'location.href = \'' + @{/kanji/list(course_index=${period})} + '\''"></div>			
 			</div>
 		</div>	
 	

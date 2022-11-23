@@ -8,5 +8,5 @@ import org.kanji.member.entity.Member;
 public interface CourseService {
 	
 	public void registCourse(Course course);
-	public int readCourse(String member_id);
+	public Optional<Course> readCourse(String member_id);
 }

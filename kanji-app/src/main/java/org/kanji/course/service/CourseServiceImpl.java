@@ -23,7 +23,7 @@ public class CourseServiceImpl implements CourseService {
 	
 	//코스 확인
 	@Override
-	public int readCourse(String member_id) {
+	public Optional<Course> readCourse(String member_id) {
 		
 		return cRepo.existCourse(member_id);
 	}
