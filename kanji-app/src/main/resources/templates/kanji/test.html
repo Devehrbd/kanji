@@ -1,6 +1,58 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+<style>
+main {
+width : 1500px;
+height : 1000px;
+}
+
+.kanji_list_center_wrap{
+width : 100%;
+height : 100%;
+
+}
+
+.problem_list{
+position : absolute;
+top : 40%;
+display : none;
+width : 50%;
+height : 50%;
+}
+
+.problem_o{
+position : absolute;
+display : none;
+top : 40%;
+width : 50%;
+height : 50%;
+}
+
+.problem_x{
+position : absolute;
+display : none;
+top : 40%;
+width : 50%;
+height : 50%;
+}
+.problem_complete{
+position : absolute;
+display : none;
+top : 40%;
+width : 50%;
+height : 50%;
+}
+
+.problem_complete_button{
+position : absolute;
+display : none;
+top : 40%;
+width : 50%;
+height : 50%;
+}
+
+</style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script th:inline="javascript">
 
@@ -21,25 +73,106 @@ $(document).ready(function(){
             itemsChild.eq(idx).before(itemsChild.eq(idx2));
     	};
 	};
+	
+	var problem = $(".problem_list").eq(0);
+	problem.css("display", "block");
+	
+	
 });
 
 var seikairitsu = 0;
 var total = 0;
 
-function seikai(){
+/*<![CDATA[*/
+$(function(){
+	$(".seikai").click(function(e){
+   	
+		seikairitsu += 1;
+		total += 1;	
+		console.log(seikairitsu/total);
+		
+	 	var a = $(".problem_list").last().index();
+
+   	 	if($(this).parent().parent().index() != a ){
+   			 
+    		$(this).parent().parent().css("display","none");
+    		$(".problem_o").css("display","block");
+    		
+    		setTimeout(() =>$(".problem_o").css("display","none"), 1000);
+    		setTimeout(() =>$(this).parent().parent().next().css("display","block"), 1000);
+    	
+    	
+   	 	}else{
+   	 	
+   			$(this).parent().parent().css("display","none");
+   			$(".problem_o").css("display","block");
+   			setTimeout(() =>$(".problem_o").css("display","none"), 1000);
+   			setTimeout(() => complete(), 1000);
+   			
+   			console.log("끝");
+   		}
 	
-	seikairitsu += 1;
-	total += 1;
-	console.log(seikairitsu/total);
+	});
+	
+	$(".kokai").click(function(e){
+		
+		total += 1;	
+		console.log(seikairitsu/total);
+		
+	 	var a = $(".problem_list").last().index();
+
+   	 	if($(this).parent().parent().index() != a ){
+   		 
+    		$(this).parent().parent().css("display","none");
+    		$(".problem_x").css("display","block");
+    		
+    		setTimeout(() =>$(".problem_x").css("display","none"), 1000);
+    		setTimeout(() =>$(this).parent().parent().next().css("display","block"), 1000);
+    	    	
+   	 	}else{
+   	 		
+   	
+   			$(this).parent().parent().css("display","none");
+   			$(".problem_x").css("display","block");
+   			setTimeout(() =>$(".problem_x").css("display","none"), 1000);
+   			setTimeout(() => complete(), 1000);
+   			console.log("끝");
+   		}
+	
+	});
+});
+function complete(){
+	
+	if(seikairitsu/total >= 0.8){
+		$(".problem_complete_text").text("정답률" + seikairitsu/total + "입니다");
+		$(".problem_complete").css("display","block")
+		$(".problem_complete_button").css("display","block");
+	}else{
+		$(".problem_complete_text").text("정답률" + seikairitsu/total + "입니다");
+		$(".problem_complete").css("display","block")
+	}
+		
+}
+function completeButton(){
+	$.ajax({
+		type : 'POST',
+		url : '이동할 주소(처리할 모델부분이나 기타)',
+		data : {
+			'id' : $('#nickname').val(),        
+			'sn' : '{.sn}'
+		},
+		success : function(data) {
+			alert("성공");
+		},
+		error : function(xhr, status) {
+			alert("실패");
+		}
+	});
 	
 }
 
-function kokai(){
-	
-	total += 1;
-	console.log(seikairitsu/total);
-	
-}
+
+
 
 
 </script>
@@ -49,7 +182,7 @@ function kokai(){
 <body>
 <main>
 	<div class = "kanji_list_center_wrap">	
-		<div th:each ="list , i : ${kanji_list}">
+		<div class = "problem_list" th:each ="list , i : ${kanji_list}">
 		
 			<div>
 				<div th:if="${type}=='character'" th:text="${list.kanjiSoundMean}"></div>
@@ -57,15 +190,28 @@ function kokai(){
 			</div>
 			
 			<div class = "seikai_list">
-				<div id = "testlist" class = "seikai" th:if="${type}=='character'" th:text="${list.kanjiCharacter}" th:onclick="seikai()"></div>
-				<div id = "testlist" class = "seikai" th:unless="${type}=='character'" th:text="${list.kanjiSoundMean}" th:onclick="seikai()"></div>
-				<div id = "testlist" th:text="${kokai1[i.index]}" th:onclick="kokai()"></div>
-				<div id = "testlist" th:text="${kokai2[i.index]}" th:onclick="kokai()"></div>
-				<div id = "testlist" th:text="${kokai3[i.index]}" th:onclick="kokai()"></div>
+				<div id = "testlist" class = "seikai" th:if="${type}=='character'" th:text="${list.kanjiCharacter}"></div>
+				<div id = "testlist" class = "seikai" th:unless="${type}=='character'" th:text="${list.kanjiSoundMean}"></div>
+				<div id = "testlist" class = "kokai" th:text="${kokai1[i.index]}"></div>
+				<div id = "testlist" class = "kokai" th:text="${kokai2[i.index]}"></div>
+				<div id = "testlist" class = "kokai" th:text="${kokai3[i.index]}"></div>
 			</div>
 			<br>
 		</div>
+		<div class = "problem_o" th:text = "정답입니다.">
+			
+		</div>
+		<div class = "problem_x"  th:text = "오답입니다.">
+		
+		</div>
+		<div class = "problem_complete">
+			<div class = "problem_complete_text"></div>
+			<div class = "problem_complete_button">완료버튼</div>
+		</div>
+		
 	</div>	
+	
+	
 </main>
 </body>
 </html>

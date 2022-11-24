@@ -51,7 +51,7 @@ public class KanjiController {
 		List<String> course_message = new ArrayList<>();
 		
 		
-		if(cpService.selectCompleteAll(login_member_id).isPresent()) {
+		if(cpService.selectCompleteAll(login_member_id).get().size() > 0) {
 			
 			Optional<List<Complete>> complete_list = cpService.selectCompleteAll(login_member_id);
 			// 2가지 나눠서 보내야해 , 위에는 완료표시 미완료표시를 나누는 기준이 됡고 아래는 단순한 list 숫자
@@ -91,6 +91,8 @@ public class KanjiController {
 			}
 			
 		}
+		
+	
 		
 		model.addAttribute("course_period", course_period);
 		model.addAttribute("course_message", course_message);
