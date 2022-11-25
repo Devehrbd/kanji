@@ -43,13 +43,14 @@ public class Complete {
 	@JoinColumn(name ="course_id")
 	private Course course;
 	
-	@Column(name = "completePassed")
+	@Column(name = "completePassed", nullable = false)
 	private int completePassed;
 	
-	@Column(name = "complete_date",columnDefinition="DATE DEFAULT (CURRENT_DATE)")
+	@Column(name = "complete_date", columnDefinition="DATE NOT NULL DEFAULT (CURRENT_DATE)")
 	private Date completeDate;
 	
-	@Column(name = "complete_cycle")
+	@Column(name = "complete_cycle", nullable = false)
+	@ColumnDefault("0")
 	private int completeCycle;
 	
 }

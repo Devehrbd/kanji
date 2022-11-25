@@ -22,4 +22,22 @@ public class CompleteServiceImpl implements CompleteService {
 		return cpRepo.findComplete(member_id);
 		
 	}
+	
+	@Override
+	public void registComplete(Complete complete) {
+		
+		cpRepo.saveComplete(complete);
+	}
+	
+	@Override
+	public Optional<Complete> selectCompleteOne(String member_id, int complete_passed) {
+		
+		return cpRepo.findCompleteOne(member_id, complete_passed);
+	}
+	
+	@Override
+	public void updateComplete(String member_id, int complete_passed) {
+		
+		cpRepo.updateComplete(member_id, complete_passed);
+	}
 }

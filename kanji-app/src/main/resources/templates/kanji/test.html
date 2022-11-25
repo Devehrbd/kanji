@@ -140,7 +140,26 @@ $(function(){
    		}
 	
 	});
+	
+	$(".problem_complete_button").click(function(e){
+		var complete = /*[[${course_index}]]*/
+		$.ajax({
+			type : 'POST',
+			url : '/complete/regist',
+			data : { 
+				'complete_passed' : complete  
+			},
+			success : function(data) {
+				location.href = "/kanji/listSelect";
+			},
+			error : function(xhr, status) {
+				alert("실패");
+			}
+		});
+	});
 });
+/*]]>*/
+
 function complete(){
 	
 	if(seikairitsu/total >= 0.8){
@@ -153,26 +172,6 @@ function complete(){
 	}
 		
 }
-function completeButton(){
-	$.ajax({
-		type : 'POST',
-		url : '이동할 주소(처리할 모델부분이나 기타)',
-		data : {
-			'id' : $('#nickname').val(),        
-			'sn' : '{.sn}'
-		},
-		success : function(data) {
-			alert("성공");
-		},
-		error : function(xhr, status) {
-			alert("실패");
-		}
-	});
-	
-}
-
-
-
 
 
 </script>
