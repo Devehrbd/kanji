@@ -1,6 +1,7 @@
 package org.kanji.common.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -50,48 +51,64 @@ public class KanjiController {
 		List<Integer> course_period = new ArrayList<>();
 		List<String> course_message = new ArrayList<>();
 		
-		
-		if(cpService.selectCompleteAll(login_member_id).get().size() > 0) {
+	
+		for (int i = 1; i<= current_course.get().getCoursePeriod(); i++) {
 			
-			Optional<List<Complete>> complete_list = cpService.selectCompleteAll(login_member_id);
-			// 2가지 나눠서 보내야해 , 위에는 완료표시 미완료표시를 나누는 기준이 됡고 아래는 단순한 list 숫자
-			//complete list에는 날짜 + passed 몇번째 + 복습 주기가 있어서 활용해야함
-			
-			//getpassed랑 저기 html숫자랑 같다면 ~ -> 표시 하는 div생성
-			
-			for (int i = 1; i<= current_course.get().getCoursePeriod(); i++) {
-				
-				
-				for (int j = 0; j < complete_list.get().size(); j++) {
-					
-					if(complete_list.get().get(j).getCompletePassed() == i) {
-		
-						
-						//현재날짜와 완료날짜 + 복습주기 비교해서 현재날짜보다 크다면 복습주기 도래 아니면 X 이런식으로
-						course_message.add("완료");
-						
-					}else {
-						
-						course_message.add("미완료");
-						
-					}
-					
-				} 
-				
-				course_period.add(i);	
-			}
-				
-		}else {
-			
-			for (int i = 1; i<= current_course.get().getCoursePeriod(); i++) {
-				
-				course_period.add(i);
-				course_message.add("미완료");
-				
-			}
+			course_period.add(i);
+			course_message.add("테스트 미완료");	
 			
 		}
 		
+		Optional<List<Complete>> tempComplete = cpService.selectCompleteAll(login_member_id);
+		
+		if(tempComplete.isPresent()) {
+			Calendar curDate = Calendar.getInstance();
+			
+			for(int i = 0; i < tempComplete.get().size(); i++) {
+				Calendar comDate = Calendar.getInstance();
+				Date date = tempComplete.get().get(i).getCompleteDate();
+				comDate.setTime(date);
+				
+				
+				switch(tempComplete.get().get(i).getCompleteCycle()) {
+				
+					case 0 : comDate.add(Calendar.DATE, 1);
+							 if(curDate.after(comDate)) {
+								 course_message.set(tempComplete.get().get(i).getCompletePassed()-1, "복습기간도래");
+							 }else {
+								 course_message.set(tempComplete.get().get(i).getCompletePassed()-1, "테스트 완료(복습기간미도래)");
+							 }
+							 break;
+					case 1 : comDate.add(Calendar.DATE, 7);
+							 if(curDate.after(comDate)) {
+								 course_message.set(tempComplete.get().get(i).getCompletePassed()-1, "복습기간도래");
+							 }else {
+								 course_message.set(tempComplete.get().get(i).getCompletePassed()-1, "테스트 완료(복습기간미도래)");
+							 }
+							 break;
+					
+					case 2 : comDate.add(Calendar.DATE, 14);
+					 		if(curDate.after(comDate)) {
+					 			course_message.set(tempComplete.get().get(i).getCompletePassed()-1, "복습기간도래");
+					 		}else {
+					 			course_message.set(tempComplete.get().get(i).getCompletePassed()-1, "테스트 완료(복습기간미도래)");
+					 		}
+					 		break;
+							
+					default : comDate.add(Calendar.DATE, 30);
+							if(curDate.after(comDate)) {
+								course_message.set(tempComplete.get().get(i).getCompletePassed()-1, "복습기간도래");
+							}else {
+								course_message.set(tempComplete.get().get(i).getCompletePassed()-1, "테스트 완료(복습기간미도래)");
+							}
+							break;
+							
+				}
+			
+			}	
+			
+			
+		}
 	
 		
 		model.addAttribute("course_period", course_period);
