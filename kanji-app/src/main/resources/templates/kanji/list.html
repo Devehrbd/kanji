@@ -2,11 +2,59 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<style type="text/css">
+.kanji_favorites_regist img{
+width : 50px;
+height : 50px;
+}
+
+</style>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script th:inline="javascript">
+/*<![CDATA[*/
+$(document).ready(function(){
+	var fav = /*[[${favorites_list}]]*/
+	var kanji = /*[[${kanji_list}]]*/
+	
+	for(var i = 0; i < fav.length; i++){
+
+	}
+	
+	
+	
+});
+/*]]>*/
+
+/*<![CDATA[*/
+$(function(){
+	$(".kanji_favorites_regist").click(function(e){
+   	
+		var favorites = $(this).siblings().first().text();
+		
+			$.ajax({
+				type : 'POST',
+				url : '/favorites/regist',
+				data : { 
+					'kanji_id' : favorites  
+				},
+				success : function(data) {
+					alert("성공");
+				},
+				error : function(xhr, status) {
+					alert("실패");
+				}
+			});
+	
+	});
+});
+/*]]>*/
+
+
+</script>
 <title>Insert title here</title>
 </head>
 <body>
 <main>
-
 	<div class = "kanji_list_top_wrap">
 	
 		<div class = "kanji_test_button" th:text="테스트" th:onclick="'location.href = \'' + @{/kanji/testSelect(course_index=${course_index})} + '\''" ></div>
@@ -14,11 +62,14 @@
 	</div>
 	<div class = "kanji_list_center_wrap">	
 		<div th:each ="list : ${kanji_list}">
+			
+			<div class = "kanji_favorites_regist"><img th:src="@{/images/star-1.png}"></div>
 			<div th:text="${list.kanjiId}"></div>
 			<div th:text="${list.kanjiCharacter}"></div>
 			<div th:text="${list.kanjiSoundMean}"></div>
 			<div th:text="${list.jpMean}"></div>
-			<div th:text="${list.jpSound}"></div>			
+			<div th:text="${list.jpSound}"></div>	
+			<br>
 			<br>
 		</div>
 	</div>	

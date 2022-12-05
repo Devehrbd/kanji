@@ -14,8 +14,11 @@ import org.kanji.complete.entity.Complete;
 import org.kanji.complete.service.CompleteServiceImpl;
 import org.kanji.course.entity.Course;
 import org.kanji.course.service.CourseServiceImpl;
+import org.kanji.favorites.entity.Favorites;
+import org.kanji.favorites.service.FavoritesServiceImpl;
 import org.kanji.kanji.entity.Kanji;
 import org.kanji.kanji.service.KanjiServiceImpl;
+import org.kanji.member.entity.Member;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +35,7 @@ public class KanjiController {
 	private CourseServiceImpl cService;
 	private CompleteServiceImpl cpService;
 	private KanjiServiceImpl kService;
+	private FavoritesServiceImpl fService;
 	
 	@GetMapping("listSelect")
 	public void listSelect() {
@@ -45,6 +49,7 @@ public class KanjiController {
 		
 		session.getAttribute("login_member");
 				
+		
 		String login_member_id = (String)session.getAttribute("login_member_id");
 					
 		Optional<Course> current_course = cService.readCourse(login_member_id);
@@ -101,15 +106,14 @@ public class KanjiController {
 							}else {
 								course_message.set(tempComplete.get().get(i).getCompletePassed()-1, "테스트 완료(복습기간미도래)");
 							}
-							break;
-							
+							break;				
 				}
-			
-			}	
-			
-			
+			}			
 		}
-	
+		
+		
+		
+		
 		
 		model.addAttribute("course_period", course_period);
 		model.addAttribute("course_message", course_message);
@@ -118,7 +122,7 @@ public class KanjiController {
 	@GetMapping("/list")
 	public void list(@Param("course_index")int course_index,HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
-		session.getAttribute("login_member");
+
 		String login_member_id = (String)session.getAttribute("login_member_id");
 		int current_course = cService.readCourse(login_member_id).get().getCoursePeriod();
 		
@@ -145,8 +149,32 @@ public class KanjiController {
 
 		kanji_list = kService.readListKanji(kanji_index, sep_kanji);
 		
+		
+		List<Integer> favorites_num = new ArrayList<>();
+		Optional<List<Favorites>> fav = fService.readFavoritesList((Member)session.getAttribute("login_member"));
+		
+		if(fav.isPresent()) {
+			
+			for(int i = 0; i < fav.get().size(); i++) {
+				
+				if(fav.get().get(i).getKanji().getKanjiId() >= kanji_list.get(0).getKanjiId()
+						&& fav.get().get(i).getKanji().getKanjiId() <= kanji_list.get(kanji_list.size()-1).getKanjiId()) {
+					favorites_num.add(fav.get().get(i).getKanji().getKanjiId());
+				}
+				
+				
+			}
+			
+			
+			
+		}
+		
+		model.addAttribute("favorites_list",favorites_num);
 		model.addAttribute("kanji_list",kanji_list);
 		model.addAttribute("course_index",course_index);
+		
+		
+		
 	}
 	
 	@GetMapping("/testSelect")
@@ -200,6 +228,7 @@ public class KanjiController {
 			kokai1 = kService.readListSoundMean(sep_kanji);
 			kokai2 = kService.readListSoundMean(sep_kanji);
 			kokai3 = kService.readListSoundMean(sep_kanji);
+			
 		}
 		
 		
