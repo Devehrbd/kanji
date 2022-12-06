@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Controller
 @RequestMapping("/kanji")
@@ -161,19 +162,34 @@ public class KanjiController {
 						&& fav.get().get(i).getKanji().getKanjiId() <= kanji_list.get(kanji_list.size()-1).getKanjiId()) {
 					favorites_num.add(fav.get().get(i).getKanji().getKanjiId());
 				}
-				
-				
+
 			}
-			
-			
-			
+
 		}
 		
-		model.addAttribute("favorites_list",favorites_num);
+		List<Integer> favorites_num2 = new ArrayList<>();
+		
+		for (int i = 0; i < kanji_list.size(); i++) {
+			favorites_num2.add(null);
+		}
+		
+		for (int i = 0; i < kanji_list.size(); i++) {
+			
+			for(int j = 0; j < favorites_num.size(); j++) {
+				if(kanji_list.get(i).getKanjiId() == favorites_num.get(j)) {
+					favorites_num2.set(i,favorites_num.get(j));
+				}
+			}
+		}
+		
+		for(int i=0; i<favorites_num2.size();i++) {
+			System.out.println(favorites_num2.get(i));
+		}
+		
+		model.addAttribute("favorites_list",favorites_num2);
 		model.addAttribute("kanji_list",kanji_list);
 		model.addAttribute("course_index",course_index);
-		
-		
+
 		
 	}
 	
@@ -243,4 +259,6 @@ public class KanjiController {
 		model.addAttribute("kokai2",kokai2);
 		model.addAttribute("kokai3",kokai3);
 	}
+	
+	
 }

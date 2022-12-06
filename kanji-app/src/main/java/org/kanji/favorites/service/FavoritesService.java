@@ -11,4 +11,5 @@ public interface FavoritesService {
 	public void registFavorites(Favorites fav);
 	public Optional<Favorites> readFavorites(Member member, Kanji kanji);
 	public Optional<List<Favorites>> readFavoritesList(Member member);
+	public void deleteFavorites(Member member, Kanji kanji);
 }

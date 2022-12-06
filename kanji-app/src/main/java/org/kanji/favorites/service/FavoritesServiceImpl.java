@@ -41,4 +41,11 @@ public class FavoritesServiceImpl implements FavoritesService {
 		// TODO Auto-generated method stub
 		return fRepo.readFavoritesList(member.getMemberId());
 	}
+	
+	@Override
+	public void deleteFavorites(Member member, Kanji kanji) {
+		
+		fRepo.deleteFavorites(member.getMemberId(), kanji.getKanjiId());
+		
+	}
 }

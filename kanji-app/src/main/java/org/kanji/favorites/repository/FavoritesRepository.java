@@ -20,4 +20,8 @@ public interface FavoritesRepository extends JpaRepository<Favorites, Integer> {
 	@Query(value = "select * from favorites where member_id = :member_id",nativeQuery = true)
 	Optional<List<Favorites>> readFavoritesList(@Param("member_id")String member_id);
 	
+	@Transactional
+	@Modifying
+	@Query(value = "delete from favorites where member_id = :member_id and kanji_id = :kanji_id",nativeQuery = true)
+	void deleteFavorites(@Param("member_id")String member_id,@Param("kanji_id")int kanji_id);
 }

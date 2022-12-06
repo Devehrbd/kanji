@@ -55,6 +55,21 @@ public class FavoritesController {
 		
 		return "/main";
 	}
+	
+	@PostMapping("delete")
+	public String delete(@Param("kanji_id") int kanji_id, HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+			
+		Member login_member = (Member)session.getAttribute("login_member");
+
+		Kanji kanji = new Kanji();
+		kanji.setKanjiId(kanji_id);
+		
+		fService.deleteFavorites(login_member, kanji);
+		
+		return "/main";
+	}
 
 }
 
