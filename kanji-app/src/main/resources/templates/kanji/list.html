@@ -20,31 +20,16 @@ $(document).ready(function(){
 
 /*<![CDATA[*/
 $(function(){
-	$(".kanji_favorites_regist2").click(function(e){
-   		var click_favorites = $(this);
-		var favorites = $(this).siblings().first().text();
-		
-			$.ajax({
-				type : 'POST',
-				url : '/favorites/regist',
-				data : { 
-					'kanji_id' : favorites  
-				},
-				success : function(data) {
-					 click_favorites.children().attr("src","/images/star-1.png");
-					 click_favorites.attr("class","kanji_favorites_regist");
-				},
-				error : function(xhr, status) {
-					alert("실패");
-				}
-			});
 	
-	});
-		$(".kanji_favorites_regist").click(function(e){
-			
-   		var click_favorites = $(this);
+	
+	$(".kanji_favorites_regist").click(function(e){
+		var click_favorites = $(this);
 		var favorites = $(this).siblings().first().text();
 		
+		console.log(click_favorites.children().attr("src"));
+		
+		if(click_favorites.children().attr("src")=='/images/star-1.png'){
+			
 			$.ajax({
 				type : 'POST',
 				url : '/favorites/delete',
@@ -59,6 +44,32 @@ $(function(){
 					alert("실패");
 				}
 			});
+			
+		}else{
+			
+			$.ajax({
+				type : 'POST',
+				url : '/favorites/regist',
+				data : { 
+					'kanji_id' : favorites  
+				},
+				success : function(data) {
+					 click_favorites.children().attr("src","/images/star-1.png");
+					 click_favorites.attr("class","kanji_favorites_regist");
+				},
+				error : function(xhr, status) {
+					alert("실패");
+				}
+			});
+		}
+		
+		
+		
+		
+		
+   		
+		
+
 	
 	});
 });
@@ -80,7 +91,7 @@ $(function(){
 			<div  class = "kanji_favorites_regist" th:if="${list.kanjiId} == ${favorites_list[i.index]}">
 				<img th:src="@{/images/star-1.png}">
 			</div>
-			<div  class = "kanji_favorites_regist2" th:unless="${list.kanjiId}==${favorites_list[i.index]}">
+			<div  class = "kanji_favorites_regist" th:unless="${list.kanjiId}==${favorites_list[i.index]}">
 				<img th:src="@{/images/star-2.png}">
 			</div>
 			<div th:text="${list.kanjiId}"></div>
