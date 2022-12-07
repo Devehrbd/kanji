@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <style type="text/css">
-.kanji_favorites_regist img{
+.kanji_favorites_delete img{
 width : 50px;
 height : 50px;
 }
@@ -22,14 +22,14 @@ $(document).ready(function(){
 $(function(){
 	
 	
-	$(".kanji_favorites_regist").click(function(e){
+	$(".kanji_favorites_delete").click(function(e){
+		
+		if(confirm("정말 삭제 하시겠습니까?")){
+			
+		
 		var click_favorites = $(this);
 		var favorites = $(this).siblings().first().text();
 		
-		console.log(click_favorites.children().attr("src"));
-		
-		if(click_favorites.children().attr("src")=='/images/star-1.png'){
-			
 			$.ajax({
 				type : 'POST',
 				url : '/favorites/delete',
@@ -37,31 +37,15 @@ $(function(){
 					'kanji_id' : favorites  
 				},
 				success : function(data) {
-					 click_favorites.children().attr("src","/images/star-2.png");
+					click_favorites.parent().css("display","none");
 				},
 				error : function(xhr, status) {
 					alert("실패");
 				}
 			});
-			
-		}else{
-			
-			$.ajax({
-				type : 'POST',
-				url : '/favorites/regist',
-				data : { 
-					'kanji_id' : favorites  
-				},
-				success : function(data) {
-					 click_favorites.children().attr("src","/images/star-1.png");
-				},
-				error : function(xhr, status) {
-					alert("실패");
-				}
-			});
-		}
-		
+	
 
+		}
 	});
 });
 /*]]>*/
@@ -79,12 +63,10 @@ $(function(){
 	</div>
 	<div class = "kanji_list_center_wrap">	
 		<div th:each ="list , i : ${kanji_list}">
-			<div  class = "kanji_favorites_regist" th:if="${list.kanjiId} == ${favorites_list[i.index]}">
+			<div  class = "kanji_favorites_delete">
 				<img th:src="@{/images/star-1.png}">
 			</div>
-			<div  class = "kanji_favorites_regist" th:unless="${list.kanjiId}==${favorites_list[i.index]}">
-				<img th:src="@{/images/star-2.png}">
-			</div>
+	
 			<div th:text="${list.kanjiId}"></div>
 			<div th:text="${list.kanjiCharacter}"></div>
 			<div th:text="${list.kanjiSoundMean}"></div>

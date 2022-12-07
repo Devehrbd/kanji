@@ -1,16 +1,90 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+<style>
+@font-face {
+    font-family: 'KOTRAHOPE';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/KOTRAHOPE.woff2') format('woff2');
+    font-weight: normal;
+   	font-style: normal;
+}
+
+/*  1번째  */
+body{
+	font-family : KOTRAHOPE;
+	margin : 0 auto;
+
+}
+
+main{
+	width : 70%;
+	min-width : 1200px;
+	height : 90vh;
+	min-height : 900px;
+	
+	margin : 0 auto;
+	text-align : center;
+}
+
+/*  2번째  */
+.main_top_wrap{
+	width : 100%;
+	height : 60%;
+	
+	display : flex;
+	justify-content: center;
+	align-items: center;
+	
+	font-size : 4.0rem;
+}
+
+.main_center_wrap{
+	width : 100%;
+	height : 40%; 
+	
+	display : flex;
+	justify-content: center;
+	align-items: top;
+}
+
+/*  3번째 - center_wrap */
+.main_center_wrap img{
+	width : 100px;
+	height : 100px;
+}
+
+/*  3번째 - top_wrap */
+
+</style>
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<script th:inline="javascript">
+
+$(function(){
+	$(".main_center_wrap img").click(function(e){
+		
+		location.href="/member/loginPage";
+		
+	});
+});
+
+</script>
+
+
 <meta charset="UTF-8">
 <title>Kanji 2136</title>
 </head>
 <body>
 <main>
-	<form action = "/member/login" method = "post">
-		<input type = "text" name = "memberId">아이디<br>
-		<input type = "password" name = "memberPass">비밀번호<br>
-		<button type="submit">로그인</button>
-	</form>
+	<div class = "main_top_wrap">
+		<div><span>반복! 상용한자 2136!</span></div>
+	</div>
+	<div class = "main_center_wrap">
+		<img  th:src ="@{/images/arrow.png}">
+	</div>
+	
+	
 </main>
 </body>
 </html>

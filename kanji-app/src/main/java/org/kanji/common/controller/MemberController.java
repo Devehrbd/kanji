@@ -21,6 +21,11 @@ public class MemberController {
 	
 	private MemberServiceImpl mService;
 	
+	@GetMapping("/loginPage")
+	public void loginPage() {
+		
+	}
+	
 	//로긴
 	@PostMapping("/login")
 	public String login(Member member, HttpServletRequest request) {

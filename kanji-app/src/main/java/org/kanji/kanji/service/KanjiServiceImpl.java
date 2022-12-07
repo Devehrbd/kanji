@@ -30,4 +30,10 @@ public class KanjiServiceImpl implements KanjiService {
 	
 			return kRepo.readListSoundMean(sep_kanji);
 		}
+		
+		@Override
+		public List<Kanji> readFavoritesKanjiList(List<Integer> kanji_id) {
+		
+		return kRepo.findByKanjiIdIn(kanji_id);
+		}
 }

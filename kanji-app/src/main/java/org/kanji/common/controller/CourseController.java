@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.kanji.complete.service.CompleteServiceImpl;
 import org.kanji.course.entity.Course;
 import org.kanji.course.service.CourseServiceImpl;
 import org.kanji.member.entity.Member;
@@ -22,6 +23,7 @@ import lombok.AllArgsConstructor;
 public class CourseController {
 	
 	private CourseServiceImpl cService;
+	private CompleteServiceImpl cpService;
 	
 	@GetMapping("/select")
 	public String select(HttpServletRequest request) {
@@ -56,5 +58,19 @@ public class CourseController {
 		cService.registCourse(course);
 		
 		return "redirect:/kanji/listSelect";
+	}
+	
+	@GetMapping("/reselection")
+	public String reselection(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+				
+		Member login_member= (Member)session.getAttribute("login_member");
+		
+		cpService.deleteComplete(login_member);
+		
+		cService.deleteCourse(login_member);
+		
+		return "redirect:/course/select";
 	}
 }

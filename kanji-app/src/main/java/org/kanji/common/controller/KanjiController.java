@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 
 @Controller
 @RequestMapping("/kanji")
@@ -107,7 +106,9 @@ public class KanjiController {
 							}else {
 								course_message.set(tempComplete.get().get(i).getCompletePassed()-1, "테스트 완료(복습기간미도래)");
 							}
-							break;				
+							
+							break;	
+							
 				}
 			}			
 		}
@@ -182,10 +183,6 @@ public class KanjiController {
 			}
 		}
 		
-		for(int i=0; i<favorites_num2.size();i++) {
-			System.out.println(favorites_num2.get(i));
-		}
-		
 		model.addAttribute("favorites_list",favorites_num2);
 		model.addAttribute("kanji_list",kanji_list);
 		model.addAttribute("course_index",course_index);
@@ -203,7 +200,6 @@ public class KanjiController {
 	@GetMapping("/test")
 	public void test(@Param("type")String type,@Param("course_index")int course_index,HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
-		session.getAttribute("login_member");
 		String login_member_id = (String)session.getAttribute("login_member_id");
 		int current_course = cService.readCourse(login_member_id).get().getCoursePeriod();
 		
@@ -260,5 +256,30 @@ public class KanjiController {
 		model.addAttribute("kokai3",kokai3);
 	}
 	
+	@GetMapping("/favoritesList")
+	public void favList(HttpServletRequest request, Model model) {
+		
+		HttpSession session = request.getSession();
+		Member login_member = (Member)session.getAttribute("login_member");
+		
+		Optional<List<Favorites>> favorites_list = Optional.empty();
+		favorites_list = fService.readFavoritesList(login_member);
+		
+		List<Integer> kanji_id_list = new ArrayList<>();
+		
+		if(favorites_list.isPresent()) {
+			
+			for(int i = 0; i < favorites_list.get().size(); i++) {
+				
+				kanji_id_list.add(favorites_list.get().get(i).getKanji().getKanjiId());
+			}
+			
+		}
+		
+		List<Kanji> kanji_favorites_list = kService.readFavoritesKanjiList(kanji_id_list);
+		
+		model.addAttribute("kanji_list",kanji_favorites_list);		
+		
+	}
 	
 }

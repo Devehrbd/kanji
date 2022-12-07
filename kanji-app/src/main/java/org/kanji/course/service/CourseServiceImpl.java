@@ -27,4 +27,10 @@ public class CourseServiceImpl implements CourseService {
 		
 		return cRepo.existCourse(member_id);
 	}
+	
+	@Override
+	public void deleteCourse(Member member) {
+		
+		cRepo.deleteCourse(member.getMemberId());
+	}
 }

@@ -19,4 +19,6 @@ public interface KanjiRepository extends JpaRepository<Kanji, Integer> {
 	
 	@Query(value = "select kanji_sound_mean from kanji order by rand() limit :sep_kanji",nativeQuery = true)
 	List<String> readListSoundMean(@Param("sep_kanji")int sep_kanji);
+	
+	List<Kanji> findByKanjiIdIn(List<Integer> kanji_id);
 }

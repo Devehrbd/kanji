@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.kanji.complete.entity.Complete;
 import org.kanji.complete.repository.CompleteRepository;
+import org.kanji.member.entity.Member;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -39,5 +40,12 @@ public class CompleteServiceImpl implements CompleteService {
 	public void updateComplete(String member_id, int complete_passed) {
 		
 		cpRepo.updateComplete(member_id, complete_passed);
+	}
+	
+	@Override
+	public void deleteComplete(Member member) {
+
+		cpRepo.deleteComplete(member.getMemberId());
+		
 	}
 }

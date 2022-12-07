@@ -27,4 +27,9 @@ public interface CompleteRepository extends JpaRepository<Complete, Integer> {
 	@Transactional
 	@Query(value = "update complete set complete_cycle = complete_cycle + 1,complete_date = (current_date) where (member_id = :member_id and complete_passed = :complete_passed)" ,nativeQuery = true)
 	void updateComplete(@Param("member_id")String member_id,@Param("complete_passed")int complete_passed);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "delete from complete where member_id = :member_id",nativeQuery = true)
+	void deleteComplete(@Param("member_id")String member_id);
 }
