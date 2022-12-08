@@ -282,4 +282,58 @@ public class KanjiController {
 		
 	}
 	
+	@GetMapping("/favoritesTestSelect")
+	public void testSelect(Model model) {
+			
+	}
+	
+	@GetMapping("/favoritesTest")
+	public void favoritesTest(@Param("type")String type,HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		Member login_member = (Member)session.getAttribute("login_member");
+
+		Optional<List<Favorites>> favorites_list = Optional.empty();
+	
+		favorites_list = fService.readFavoritesList(login_member);
+		
+		List<Integer> kanji_id_list = new ArrayList<>();
+		
+		if(favorites_list.isPresent()) {
+			
+			for(int i = 0; i < favorites_list.get().size(); i++) {
+				
+				kanji_id_list.add(favorites_list.get().get(i).getKanji().getKanjiId());
+			}
+			
+		}
+		
+		List<Kanji> kanji_list = kService.readFavoritesKanjiList(kanji_id_list);
+		
+		List<String> kokai1 = new ArrayList<>();
+		List<String> kokai2 = new ArrayList<>();
+		List<String> kokai3 = new ArrayList<>();
+		
+		
+		if(type.equals("character")) {
+			
+			kokai1 = kService.readListCharacter(kanji_list.size());
+			kokai2 = kService.readListCharacter(kanji_list.size());
+			kokai3 = kService.readListCharacter(kanji_list.size());
+			
+		}else{
+			
+			kokai1 = kService.readListSoundMean(kanji_list.size());
+			kokai2 = kService.readListSoundMean(kanji_list.size());
+			kokai3 = kService.readListSoundMean(kanji_list.size());
+			
+		}
+
+		Collections.shuffle(kanji_list);
+	
+		model.addAttribute("type",type);
+		model.addAttribute("kanji_list",kanji_list);
+		model.addAttribute("kokai1",kokai1);
+		model.addAttribute("kokai2",kokai2);
+		model.addAttribute("kokai3",kokai3);
+	}
 }

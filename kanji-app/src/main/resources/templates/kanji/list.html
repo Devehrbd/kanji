@@ -16,8 +16,17 @@
    	font-style: normal;
 }
 
-::-webkit-scrollbar {
-	display: none;
+.kanji_list_center_wrap::-webkit-scrollbar{
+	width : 8px;
+}
+
+.kanji_list_center_wrap::-webkit-scrollbar-thumb{
+    background: #FAA8A8;
+    border-radius: 25px;
+}
+
+.kanji_list_center_wrap::-webkit-scrollbar-track{
+    background-color: #FFF0F0;
 }
 
 /*  1번째  */
@@ -43,6 +52,7 @@ main{
 .kanji_list_top_wrap{
 	width : 100%;
 	height : 20%;
+	position : relative;
 	
 	display : flex;
 	justify-content: center;
@@ -53,10 +63,27 @@ main{
 	width : 100%;
 	height : 80%;
 	overflow : auto;
-	color : #323232;
+	color : black;
 }
 
 /*  3번째 - top_wrap */
+
+.kanji_list_backspace{
+	width : 10%;
+	height : 50px;
+	font-size: 30px;
+	font-family: 'KOTRAHOPE';
+	color : black;
+	cursor : pointer;
+	
+	position : absolute;
+	right : 7%;
+	top : 20%;
+}
+
+.kanji_list_backspace:hover{
+	color : #6e6e6e;
+}
 .kanji_test_button{
 	width : 20%;
 	height : 50px;
@@ -241,6 +268,7 @@ $(function(){
 	<div class = "kanji_list_top_wrap">
 	
 		<div class = "kanji_test_button" th:text="'테스트 '+'하러'+' 가기'" th:onclick="'location.href = \'' + @{/kanji/testSelect(course_index=${course_index})} + '\''" ></div>
+		<div class = "kanji_list_backspace" th:onclick="'location.href = \'' + @{/kanji/listSelect2} + '\''">뒤로가기</div>
 		<div class = "kanji_list_top_wrap_wrap">
 			<div class = "kanji_list_top_favorites">즐겨 찾기 등록</div>
 			<div class = "kanji_list_top_character">한자</div>

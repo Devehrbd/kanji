@@ -338,24 +338,12 @@ $(function(){
 	
 	$(".problem_complete_button_pass span").click(function(e){
 		var complete = /*[[${course_index}]]*/
-		$.ajax({
-			type : 'POST',
-			url : '/complete/regist',
-			data : { 
-				'complete_passed' : complete  
-			},
-			success : function(data) {
-				location.href = "/kanji/listSelect";
-			},
-			error : function(xhr, status) {
-				alert("실패");
-			}
-		});
+		location.href = "/kanji/listSelect";
 	});
 	
 	$(".problem_complete_button_notPass span").click(function(e){
 		var complete = /*[[${course_index}]]*/
-		location.href = "/kanji/list?course_index="+complete;
+		location.href = "/kanji/favoritesList";
 	});
 });
 /*]]>*/
@@ -363,7 +351,7 @@ $(function(){
 function complete(){
 	
 	if(seikairitsu/total >= 0.8){
-		$(".problem_complete_text_pass").text(total + " 문제중에 " + seikairitsu + " 문제 맞췄어요 !");
+		$(".problem_complete_text_pass").text(total + " 문제중에 " + seikairitsu + " 문제 맞췄어요 ! 테스트 통과 !");
 		$(".problem_complete_pass").css("display","block")
 
 	}else{
@@ -410,7 +398,7 @@ function complete(){
 		</div>
 		<div class = "problem_complete_pass">
 			<div class = "problem_complete_text_pass"></div>
-			<div class = "problem_complete_button_pass"><span>테스트 통과 !</span></div>
+			<div class = "problem_complete_button_pass"><span>리스트 선택으로 이동 !</span></div>
 		</div>
 		<div class = "problem_complete_notPass">
 			<div class = "problem_complete_text_notPass"></div>
