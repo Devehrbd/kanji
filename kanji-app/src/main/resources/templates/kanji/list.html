@@ -266,7 +266,7 @@ $(function(){
 <body>
 <main>
 	<div class = "kanji_list_top_wrap">
-	
+		
 		<div class = "kanji_test_button" th:text="'테스트 '+'하러'+' 가기'" th:onclick="'location.href = \'' + @{/kanji/testSelect(course_index=${course_index})} + '\''" ></div>
 		<div class = "kanji_list_backspace" th:onclick="'location.href = \'' + @{/kanji/listSelect2} + '\''">뒤로가기</div>
 		<div class = "kanji_list_top_wrap_wrap">

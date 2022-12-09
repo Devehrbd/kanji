@@ -103,7 +103,7 @@ main {
 	justify-content: center;
 	align-items: center;
 }
-.kanji_listSelect_course_reselection{
+.kanji_listSelect_course_reselection_logout{
 	width : 100%;
 	height : 30%;
 	
@@ -115,7 +115,7 @@ main {
 	font-size : 30px;
 }
 
-.kanji_listSelect_course_reselection div{
+.kanji_listSelect_course_reselection_logout div{
 	width : 10%;
 	height : 40%;
 	
@@ -123,10 +123,11 @@ main {
 	display : flex;
 	justify-content: center;
 	align-items: center;
+	margin : 30px;
 	
 }
 
-.kanji_listSelect_course_reselection div:hover{
+.kanji_listSelect_course_reselection_logout div:hover{
 	color : #bebebe;
 }
 .kanji_listSelect_today_kanji:hover{
@@ -156,8 +157,9 @@ main {
 				<div>즐겨찾기 추가한 한자 리스트 !</div>
 			</div>
 		</div>
-		<div class="kanji_listSelect_course_reselection" >
+		<div class="kanji_listSelect_course_reselection_logout" >
 			<div onclick="location.href='/course/reselection'">코스 재선택</div>
+			<div onclick="location.href='/member/logout'"><span>로그아웃</span></div>
 		</div>
 	</div>
 </main>
